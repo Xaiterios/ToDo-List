@@ -16,4 +16,4 @@ A Docker container hosts the database, ensuring a consistent and isolated enviro
 The user interface and user experience (UI/UX) were designed using Figma. Figma was used to create the visual layout and mockup.
 
 ## Visual Design
-[ToDoListMockup.pdf](https://github.com/user-attachments/files/22468589/ToDoListMockup.pdf)
+<img width="1415" height="753" alt="image" src="https://github.com/user-attachments/assets/a8cb22df-dd7d-4409-94dc-a004940cffdb" />
