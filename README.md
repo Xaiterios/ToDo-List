@@ -17,3 +17,9 @@ The user interface and user experience (UI/UX) were designed using Figma. Figma 
 
 ## Visual Design
 <img width="1415" height="753" alt="image" src="https://github.com/user-attachments/assets/a8cb22df-dd7d-4409-94dc-a004940cffdb" />
+
+## User Stories
+
+1. As an user, I want to be able to create a new task so that I can organize my work.
+2. As an user, I want to be able to see my tasks so that I can all the tasks I need to do.
+3. As an user, I want to be able to change the status of a task so that I can track the status of a task.
