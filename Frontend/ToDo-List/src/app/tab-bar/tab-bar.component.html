@@ -1,0 +1,9 @@
+<div class="bar">
+    <mat-icon class="agendaIcon">view_agenda</mat-icon>
+    <p class="barTitle">To Do List</p>
+
+    <form [formGroup]="createForm" class="createForm" (ngSubmit)="onSubmit()">
+        <input type="text" class="inputTask" placeholder="Go shopping" formControlName="title">
+        <button type="submit" class="addButtonTask">Add Task</button>
+    </form>
+</div>

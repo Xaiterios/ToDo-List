@@ -18,6 +18,7 @@ public class AssignmentService implements IAssingmentService{
 
     @Override
     public void CreateAssingment(AssignmentRequest assignmentRequest) {
+        System.out.println("Service -------------------------------------");
         String title = assignmentRequest.getTitle().trim();
         if (title == null || title.length() < 1){
             throw new InvalidAssignmentRequestException("Title can not be empty");
