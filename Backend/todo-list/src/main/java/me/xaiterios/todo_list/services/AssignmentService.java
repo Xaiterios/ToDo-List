@@ -1,5 +1,6 @@
 package me.xaiterios.todo_list.services;
 
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.stereotype.Service;
@@ -8,17 +9,25 @@ import lombok.RequiredArgsConstructor;
 import me.xaiterios.todo_list.domain.Assignment;
 import me.xaiterios.todo_list.domain.AssignmentStatus;
 import me.xaiterios.todo_list.domain.Request.AssignmentRequest;
+import me.xaiterios.todo_list.domain.Response.AssignmentResponse;
 import me.xaiterios.todo_list.exceptions.InvalidAssignmentRequestException;
 import me.xaiterios.todo_list.repository.AssignmentRepository;
 
 @Service
 @RequiredArgsConstructor
-public class AssignmentService implements IAssingmentService{
+public class AssignmentService implements IAssignmentService{
     private final AssignmentRepository assignmentRepository;
+
+    private AssignmentResponse mapToAssignmentResponse(Assignment assignment){
+        return AssignmentResponse.builder()
+        .id(assignment.getId())
+        .title(assignment.getTitle())
+        .assignmentStatus(assignment.getAssignmentStatus())
+        .build();
+    }
 
     @Override
     public void CreateAssingment(AssignmentRequest assignmentRequest) {
-        System.out.println("Service -------------------------------------");
         String title = assignmentRequest.getTitle().trim();
         if (title == null || title.length() < 1){
             throw new InvalidAssignmentRequestException("Title can not be empty");
@@ -31,5 +40,10 @@ public class AssignmentService implements IAssingmentService{
         .build();
 
         assignmentRepository.save(assignment);
+    }
+
+    @Override
+    public List<AssignmentResponse> GetAllAssignments() {
+        return assignmentRepository.findAll().stream().map(this::mapToAssignmentResponse).toList();
     }
 }

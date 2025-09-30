@@ -1,7 +1,11 @@
 package me.xaiterios.todo_list;
 
 import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +19,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import me.xaiterios.todo_list.controller.AssignmentController;
 import me.xaiterios.todo_list.domain.Request.AssignmentRequest;
+import me.xaiterios.todo_list.domain.Response.AssignmentResponse;
 import me.xaiterios.todo_list.exceptions.InvalidAssignmentRequestException;
 import me.xaiterios.todo_list.services.AssignmentService;
 
@@ -58,5 +63,22 @@ public class AssignmentControllerTests {
         .contentType(MediaType.APPLICATION_JSON)
         .content(assignmentString))
         .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void testGetAllAssignments() throws Exception{
+        List<AssignmentResponse> assignments = List.of(
+            AssignmentResponse.builder().title("Title1").build(),
+            AssignmentResponse.builder().title("Title2").build()
+        );
+
+        when(assignmentService.GetAllAssignments()).thenReturn(assignments);
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/assignment")
+        .contentType(MediaType.APPLICATION_JSON))
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$.size()").value(2))
+        .andExpect(jsonPath("$[0].title").value("Title1"))
+        .andExpect(jsonPath("$[1].title").value("Title2"));
     }
 }
