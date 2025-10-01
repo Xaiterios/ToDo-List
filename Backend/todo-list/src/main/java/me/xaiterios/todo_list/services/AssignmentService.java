@@ -46,4 +46,19 @@ public class AssignmentService implements IAssignmentService{
     public List<AssignmentResponse> GetAllAssignments() {
         return assignmentRepository.findAll().stream().map(this::mapToAssignmentResponse).toList();
     }
+
+    @Override
+    public List<AssignmentResponse> GetAllToDoAssignments() {
+        return assignmentRepository.findAllByAssignmentStatus(AssignmentStatus.ToDo).stream().map(this::mapToAssignmentResponse).toList();
+    }
+
+    @Override
+    public List<AssignmentResponse> GetAllInProgressAssignments() {
+        return assignmentRepository.findAllByAssignmentStatus(AssignmentStatus.InProgress).stream().map(this::mapToAssignmentResponse).toList();
+    }
+
+    @Override
+    public List<AssignmentResponse> GetAllCompletedAssignments() {
+        return assignmentRepository.findAllByAssignmentStatus(AssignmentStatus.Completed).stream().map(this::mapToAssignmentResponse).toList();
+    }
 }

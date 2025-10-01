@@ -13,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import me.xaiterios.todo_list.domain.Request.AssignmentRequest;
 import me.xaiterios.todo_list.services.IAssignmentService;
 
+
 @RestController
 @RequestMapping("/api/assignment")
 @RequiredArgsConstructor
@@ -28,5 +29,20 @@ public class AssignmentController {
     @GetMapping
     public ResponseEntity GetAllAssignments() {
         return new ResponseEntity<>(assignmentService.GetAllAssignments(), HttpStatus.OK);
+    }
+
+    @GetMapping("/todo")
+    public ResponseEntity GetAllToDoAssignments() {
+        return new ResponseEntity<>(assignmentService.GetAllToDoAssignments(), HttpStatus.OK);
+    }
+
+    @GetMapping("/inprogress")
+    public ResponseEntity GetAllInProgressAssignments() {
+        return new ResponseEntity<>(assignmentService.GetAllInProgressAssignments(), HttpStatus.OK);
+    }
+    
+    @GetMapping("/completed")
+    public ResponseEntity GetAllCompletedAssignments() {
+        return new ResponseEntity<>(assignmentService.GetAllCompletedAssignments(), HttpStatus.OK);
     }
 }
