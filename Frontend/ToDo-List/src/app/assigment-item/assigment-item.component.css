@@ -24,4 +24,5 @@ button {
     border-radius: 2cap;
     border: 2px solid #222222;
     font-size: xx-large;
+    cursor: pointer;
 }

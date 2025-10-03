@@ -34,4 +34,12 @@ export class AssignmentService {
   getCompletedAssignments(): Observable<Assignment[]> {
     return this.http.get<Assignment[]>(`${this.api}/completed`);
   }
+
+  updateAssignment(id: string): Observable<Assignment> {
+    return this.http.put<Assignment>(`${this.api}/${id}`, null, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      }),
+    });
+  }
 }
