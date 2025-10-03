@@ -1,0 +1,17 @@
+table {
+    width: 100%;
+    padding-top: 2%;
+}
+
+thead {
+    font-size: x-large;
+}
+
+.middleTable {
+    border-right: 1px solid #222222;
+    border-left: 1px solid #222222;
+}
+
+td, th {
+    vertical-align: top;
+}

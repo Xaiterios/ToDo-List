@@ -24,7 +24,9 @@ export class TabBarComponent {
       const newAssignmentTitle: string = { ...this.createForm.value };
       this.assignmentService.createAssignment(newAssignmentTitle).subscribe(() => {
         this.createForm.reset();
-        this.router.navigate(['/home']);
+        this.router.navigateByUrl('/', {skipLocationChange: true}).then(() => {
+          this.router.navigate(['/home']);
+        })
       });
     }
   }

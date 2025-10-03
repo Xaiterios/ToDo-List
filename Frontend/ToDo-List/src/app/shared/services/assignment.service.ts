@@ -18,4 +18,20 @@ export class AssignmentService {
       }),
     });
   }
+
+  getAssignments(): Observable<Assignment[]> {
+    return this.http.get<Assignment[]>(this.api);
+  }
+
+  getToDoAssignments(): Observable<Assignment[]> {
+    return this.http.get<Assignment[]>(`${this.api}/todo`);
+  }
+
+  getInProgressAssignments(): Observable<Assignment[]> {
+    return this.http.get<Assignment[]>(`${this.api}/inprogress`);
+  }
+
+  getCompletedAssignments(): Observable<Assignment[]> {
+    return this.http.get<Assignment[]>(`${this.api}/completed`);
+  }
 }

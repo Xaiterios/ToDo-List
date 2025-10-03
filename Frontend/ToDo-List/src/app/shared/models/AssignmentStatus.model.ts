@@ -1,5 +1,5 @@
 export enum AssignmentStatus {
-    ToDo,
-    InProgress,
-    Completed
+    ToDo = 'ToDo',
+    InProgress = 'InProgress',
+    Completed = 'Completed'
 }

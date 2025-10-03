@@ -1,0 +1,27 @@
+.fragment {
+    background-color: #37505C;
+    margin-left: 5%;
+    width: 90%;
+    border-radius: 2cap;
+}
+
+.fragment h2 {
+    text-align: center;
+    padding-top: 2%;
+    color: #FFFFFF;
+}
+
+.updateButton {
+    text-align: right;
+    padding-right: 2%;
+    padding-bottom: 2%;
+}
+
+button {
+    background-color: #FFFFFF;
+    width: 20%;
+    color: #37505C;
+    border-radius: 2cap;
+    border: 2px solid #222222;
+    font-size: xx-large;
+}
