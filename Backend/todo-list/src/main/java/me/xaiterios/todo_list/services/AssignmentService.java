@@ -4,12 +4,14 @@ import java.util.List;
 import java.util.UUID;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import lombok.RequiredArgsConstructor;
 import me.xaiterios.todo_list.domain.Assignment;
 import me.xaiterios.todo_list.domain.AssignmentStatus;
 import me.xaiterios.todo_list.domain.Request.AssignmentRequest;
 import me.xaiterios.todo_list.domain.Response.AssignmentResponse;
+import me.xaiterios.todo_list.exceptions.AssignmentNotFoundException;
 import me.xaiterios.todo_list.exceptions.InvalidAssignmentRequestException;
 import me.xaiterios.todo_list.repository.AssignmentRepository;
 
@@ -60,5 +62,25 @@ public class AssignmentService implements IAssignmentService{
     @Override
     public List<AssignmentResponse> GetAllCompletedAssignments() {
         return assignmentRepository.findAllByAssignmentStatus(AssignmentStatus.Completed).stream().map(this::mapToAssignmentResponse).toList();
+    }
+
+    @Override
+    @Transactional
+    public AssignmentResponse UpdateAssignment(String id) {
+        Assignment assignment = assignmentRepository.findById(id).orElseThrow(() -> new AssignmentNotFoundException("Assignment with id " + id + " does not exist"));
+
+        switch (assignment.getAssignmentStatus()) {
+            case ToDo:
+                assignment.setAssignmentStatus(AssignmentStatus.InProgress);
+                break;
+            case InProgress:
+                assignment.setAssignmentStatus(AssignmentStatus.Completed);
+                break;
+            case Completed:
+                assignmentRepository.deleteById(id);
+                break;
+        }
+
+        return mapToAssignmentResponse(assignment);
     }
 }

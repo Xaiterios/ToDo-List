@@ -133,4 +133,21 @@ public class AssignmentControllerTests {
         .andExpect(jsonPath("$[0].title").value("Title1"))
         .andExpect(jsonPath("$[1].title").value("Title2"));
     }
+
+    @Test
+    public void UpdateAssignment() throws Exception{
+        String id = "27aaa552-a986-456f-af1c-2a09961e16d9";
+        AssignmentResponse updatedAssignment = AssignmentResponse.builder()
+        .assignmentStatus(AssignmentStatus.InProgress)
+        .title("Title")
+        .id(id)
+        .build();
+
+        when(assignmentService.UpdateAssignment(id)).thenReturn(updatedAssignment);
+
+        mockMvc.perform(MockMvcRequestBuilders.put("/api/assignment/{id}", id)
+        .contentType(MediaType.APPLICATION_JSON))
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$.assignmentStatus").value("InProgress"));
+    }
 }

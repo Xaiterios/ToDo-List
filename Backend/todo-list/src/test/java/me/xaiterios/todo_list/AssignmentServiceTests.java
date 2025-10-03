@@ -11,6 +11,7 @@ import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -22,6 +23,7 @@ import me.xaiterios.todo_list.domain.Assignment;
 import me.xaiterios.todo_list.domain.AssignmentStatus;
 import me.xaiterios.todo_list.domain.Request.AssignmentRequest;
 import me.xaiterios.todo_list.domain.Response.AssignmentResponse;
+import me.xaiterios.todo_list.exceptions.AssignmentNotFoundException;
 import me.xaiterios.todo_list.exceptions.InvalidAssignmentRequestException;
 import me.xaiterios.todo_list.repository.AssignmentRepository;
 import me.xaiterios.todo_list.services.AssignmentService;
@@ -156,5 +158,58 @@ public class AssignmentServiceTests {
         assertEquals(2, assignmentResponses.size());
         assertTrue(assignmentResponses.get(0).getAssignmentStatus() == AssignmentStatus.Completed);
         assertTrue(assignmentResponses.get(1).getAssignmentStatus() == AssignmentStatus.Completed);
+    }
+
+    @Test
+    public void testUpdateAssignmentAssignmentStatusToDo(){
+        Assignment assignment = Assignment.builder()
+        .title("Title")
+        .assignmentStatus(AssignmentStatus.ToDo)
+        .id("27aaa552-a986-456f-af1c-2a09961e16d9")
+        .build();
+
+        when(assignmentRepository.findById("27aaa552-a986-456f-af1c-2a09961e16d9")).thenReturn(Optional.of(assignment));
+
+        AssignmentResponse newAssignment = assignmentService.UpdateAssignment("27aaa552-a986-456f-af1c-2a09961e16d9");
+
+        assertTrue(newAssignment.getAssignmentStatus() == AssignmentStatus.InProgress);
+    }
+
+    @Test
+    public void testUpdateAssignmentAssignmentStatusInProgress(){
+        Assignment assignment = Assignment.builder()
+        .title("Title")
+        .assignmentStatus(AssignmentStatus.InProgress)
+        .id("27aaa552-a986-456f-af1c-2a09961e16d9")
+        .build();
+
+        when(assignmentRepository.findById("27aaa552-a986-456f-af1c-2a09961e16d9")).thenReturn(Optional.of(assignment));
+
+        AssignmentResponse newAssignment = assignmentService.UpdateAssignment("27aaa552-a986-456f-af1c-2a09961e16d9");
+
+        assertTrue(newAssignment.getAssignmentStatus() == AssignmentStatus.Completed);
+    }
+
+    @Test
+    public void testUpdateAssignmentAssignmentStatusCompleted(){
+        Assignment assignment = Assignment.builder()
+        .title("Title")
+        .assignmentStatus(AssignmentStatus.Completed)
+        .id("27aaa552-a986-456f-af1c-2a09961e16d9")
+        .build();
+
+        when(assignmentRepository.findById("27aaa552-a986-456f-af1c-2a09961e16d9")).thenReturn(Optional.of(assignment));
+
+        assignmentService.UpdateAssignment("27aaa552-a986-456f-af1c-2a09961e16d9");
+
+        verify(assignmentRepository, times(1)).deleteById("27aaa552-a986-456f-af1c-2a09961e16d9");
+    }
+
+    @Test
+    public void testUpdateAssignmentInvalidIdShouldThrowAssignmentNotFoundException(){
+        //assertThrows(InvalidAssignmentRequestException.class, () -> assignmentService.CreateAssingment(assignmentRequest));
+        when(assignmentRepository.findById("27aaa552-a986-456f-af1c-2a09961e16d9")).thenReturn(Optional.empty());
+
+        assertThrows(AssignmentNotFoundException.class, () -> assignmentService.UpdateAssignment("27aaa552-a986-456f-af1c-2a09961e16d9"));
     }
 }

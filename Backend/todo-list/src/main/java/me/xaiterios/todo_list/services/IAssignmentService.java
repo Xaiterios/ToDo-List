@@ -11,4 +11,5 @@ public interface IAssignmentService {
     public List<AssignmentResponse> GetAllToDoAssignments();
     public List<AssignmentResponse> GetAllInProgressAssignments();
     public List<AssignmentResponse> GetAllCompletedAssignments();
+    public AssignmentResponse UpdateAssignment(String id);
 }

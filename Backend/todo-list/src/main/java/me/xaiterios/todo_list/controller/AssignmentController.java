@@ -3,7 +3,9 @@ package me.xaiterios.todo_list.controller;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -44,5 +46,10 @@ public class AssignmentController {
     @GetMapping("/completed")
     public ResponseEntity GetAllCompletedAssignments() {
         return new ResponseEntity<>(assignmentService.GetAllCompletedAssignments(), HttpStatus.OK);
+    }
+
+    @PutMapping("/{assignmentId}")
+    public ResponseEntity UpdateAssignment(@PathVariable String assignmentId){
+        return new ResponseEntity<>(assignmentService.UpdateAssignment(assignmentId), HttpStatus.OK);
     }
 }
